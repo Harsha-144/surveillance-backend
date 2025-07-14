@@ -1,21 +1,20 @@
 # Use official Python image
 FROM python:3.10-slim
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy only requirements first (for caching)
-COPY requirements.txt .
+# Copy everything into /app
+COPY . .
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the code
-COPY . .
+# Set PYTHONPATH to make 'app' importable
+ENV PYTHONPATH=/app
 
-# Expose FastAPI port
+# Expose port (if needed by Render)
 EXPOSE 8000
 
-# Run FastAPI using uvicorn
+# Run app
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-
