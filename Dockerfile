@@ -11,10 +11,10 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Set PYTHONPATH to make 'app' importable
-ENV PYTHONPATH=/app
+ENV PYTHONPATH="/code"
 
 # Expose port (if needed by Render)
 EXPOSE 8000
 
 # Run app
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT  ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
